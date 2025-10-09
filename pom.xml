@@ -50,7 +50,7 @@
 
 		<sonar.organization>eiza10</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.projectKey>eiza10_SI2</sonar.projectKey>
+		<sonar.projectKey>eiza10_Rides24</sonar.projectKey>
 		<sonar.login>134482d5565968821ba39b9d7f003ff24e4bbfd7</sonar.login>
 	</properties>
 
