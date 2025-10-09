@@ -1,0 +1,106 @@
+
+ domain.Driver#%field_initializer
+__unknown_file ("1*Ô
+1 (õ
+ò
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java ($
+domain.Driver"	
+ratings"__id*
+ (
+""zx
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java (*
+%0"java.util.Vectorô
+ñ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java (,
+%1"java.util.Vector#<init>()V*
+ (
+
+%0ô
+ñ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java (-
+domain.Driver"
+rides"__id*
+ (
+
+%0çä
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java#. #(B
+%2java.util.Vector"java.util.Vector´
+®
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java#* #(D
+%3"java.util.Vector#<init>()V*$
+ (
+
+%2java.util.Vector≤
+Ø
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java! #(E!
+domain.Driver"
+reservations"__id*$
+ (
+
+%2java.util.Vectorzx
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java& &(*
+%4"java.util.Vectorô
+ñ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java& &(,
+%5"java.util.Vector#<init>()V*
+ (
+
+%4ò
+ï
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java$ &(-
+domain.Driver"
+cars"__id*
+ (
+
+%4zx
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java). )(B
+%6"java.util.Vectorô
+ñ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java)* )(D
+%7"java.util.Vector#<init>()V*
+ (
+
+%6†
+ù
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java' )(E!
+domain.Driver"
+transactions"__id*
+ (
+
+%6zx
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java,( ,(9
+%8"java.util.Vectorô
+ñ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java,$ ,(;
+%9"java.util.Vector#<init>()V*
+ (
+
+%8û
+õ
+^
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java* ,(<
+domain.Driver"
+
+complaints"__id*
+ (
+
+%8"t
+]
+TC:/Users/Haritz/Desktop/UNI/4.urtea/SI2/SI2/Rides24/src/main/java/domain/Driver.java †(
+implicit returnB
+domain.Driver
