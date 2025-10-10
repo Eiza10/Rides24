@@ -92,9 +92,9 @@ public class MakeReservationGUI extends JFrame {
 		            jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("MakeReservationGUI.jButtonError"));
 		        }
 		        try {
-		            int hm = Integer.parseInt(kop);
-		            if(hm>0) {
-		            	facade.createReservation(hm, ride.getRideNumber(), traveler.getEmail());
+		            int nTravelers = Integer.parseInt(kop);
+		            if(nTravelers>0) {
+		            	facade.createReservation(nTravelers, ride.getRideNumber(), traveler.getEmail());
 			            dispose();
 		            }else {
 		            	jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("MakeReservationGUI.jButtonError"));

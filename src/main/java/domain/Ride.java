@@ -213,9 +213,9 @@ public class Ride implements Serializable {
 		return rideNumber+";"+";"+from+";"+to+";"+date;  
 	}
 
-	public boolean doesReservationExist(int hm, Traveler t) {
+	public boolean doesReservationExist(int nTravelers, Traveler t) {
 		for (Reservation r:reservations)
-			if ( (r.getnTravelers()==hm) && (r.getTraveler().equals(t)))
+			if ( (r.getnTravelers()==nTravelers) && (r.getTraveler().equals(t)))
 			 return true;
 		
 		return false;

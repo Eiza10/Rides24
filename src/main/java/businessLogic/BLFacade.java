@@ -97,7 +97,7 @@ public interface BLFacade  {
 	public Traveler createTraveler(String email, String name, String password)throws UserAlreadyExistException;
 	
 	@WebMethod
-	public Reservation createReservation(int hm, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException;
+	public Reservation createReservation(int nTravelers, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException;
 	
 	@WebMethod
 	public Driver getDriverByEmail(String email, String password) throws UserDoesNotExistException, PasswordDoesNotMatchException;
@@ -118,10 +118,10 @@ public interface BLFacade  {
 	public List<Reservation> getTravelerReservations(String email);
 	
 	@WebMethod
-	public void takeMoneyDriver(String email, int hm) throws NotEnoughMoneyException;
+	public void takeMoneyDriver(String email, int nTravelers) throws NotEnoughMoneyException;
 	
 	@WebMethod
-	public void putMoneyTraveler(String email, int hm);
+	public void putMoneyTraveler(String email, int nTravelers);
 	
 	@WebMethod
 	public void updateReservation(Reservation res);

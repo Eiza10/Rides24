@@ -150,9 +150,9 @@ public class PutMoneyGUI extends JFrame {
 					if (kop == null || kop.isEmpty()) {
 			            jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("TakeMoneyGUI.jButtonError2"));
 			        }else {
-			        	int hm = Integer.parseInt(kop);
-			        	if(hm>0) {
-			            	facade.putMoneyTraveler(traveler.getEmail(), hm);
+			        	int nTravelers = Integer.parseInt(kop);
+			        	if(nTravelers>0) {
+			            	facade.putMoneyTraveler(traveler.getEmail(), nTravelers);
 				            dispose();
 			            }else {
 			            	jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("TakeMoneyGUI.jButtonError2"));

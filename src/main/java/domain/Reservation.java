@@ -35,8 +35,8 @@ public class Reservation implements Serializable {
 		super();
 	}
 	
-	public Reservation(int hm, Ride r, Traveler t) {
-		this.nTravelers=hm;
+	public Reservation(int nTravelers, Ride r, Traveler t) {
+		this.nTravelers=nTravelers;
 		this.ride=r;
 		this.traveler=t;
 		this.driver=ride.getDriver();
@@ -126,8 +126,8 @@ public class Reservation implements Serializable {
 		return nTravelers;
 	}
 
-	public void setnTravelers(int hmTravelers) {
-		this.nTravelers = hmTravelers;
+	public void setnTravelers(int nTravelers) {
+		this.nTravelers = nTravelers;
 	}
 
 	public Ride getRide() {

@@ -324,23 +324,23 @@ public class DataAccess  {
 		}
 	}
 	
-	public Reservation createReservation(int hm, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
+	public Reservation createReservation(int nTravelers, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
 		System.out.println(">> DataAccess: createReservation=> how many seats= "+hm+" ride number= "+rideNumber+" traveler="+travelerEmail);
 		try {
 			db.getTransaction().begin();
 			Ride r = db.find(Ride.class, rideNumber);
-			if(r.getnPlaces()<hm) {
+			if(r.getnPlaces()<nTravelers) {
 				throw new NotEnoughAvailableSeatsException(ResourceBundle.getBundle("Etiquetas").getString("MakeReservationGUI.jButtonError2"));
 			}
 			
 			Traveler t = db.find(Traveler.class, travelerEmail);
 		    Driver d = db.find(Driver.class, r.getDriver().getEmail());
 			
-			if (r.doesReservationExist(hm, t)) {
+			if (r.doesReservationExist(nTravelers, t)) {
 				db.getTransaction().commit();
 				throw new ReservationAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ReservationAlreadyExist"));
 			}
-			Reservation res = t.makeReservation(r, hm);
+			Reservation res = t.makeReservation(r, nTravelers);
 			System.out.println("res: "+ res);
 			d.addReservation(res);
 			r.addReservation(res);
@@ -471,26 +471,26 @@ public class DataAccess  {
 		return t.getReservations();
 	}
 	
-	public void takeMoneyDriver(String email, int hm) throws NotEnoughMoneyException{
+	public void takeMoneyDriver(String email, int nTravelers) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
 		Driver d = db.find(Driver.class, email);
-		if(d.getMoney()<hm) {
+		if(d.getMoney()<nTravelers) {
 			db.getTransaction().commit();
 			throw new NotEnoughMoneyException();
 		}
-		Transaction tr = new Transaction(hm, d);
+		Transaction tr = new Transaction(nTravelers, d);
 		d.addTransaction(tr);
-		d.setMoney(d.getMoney()-hm);
+		d.setMoney(d.getMoney()-nTravelers);
 		db.persist(tr);
 		db.persist(d);
 		db.getTransaction().commit();
 	}
 	
-	public void putMoneyTraveler(String email, int hm) {
+	public void putMoneyTraveler(String email, int nTravelers) {
 		db.getTransaction().begin();
 		Traveler t = db.find(Traveler.class, email);
-		t.setMoney(t.getMoney()+hm);
-		Transaction tr = new Transaction (hm, t);
+		t.setMoney(t.getMoney()+nTravelers);
+		Transaction tr = new Transaction (nTravelers, t);
 		tr.setT(t);
 		t.addTransaction(tr);
 		db.persist(t);
