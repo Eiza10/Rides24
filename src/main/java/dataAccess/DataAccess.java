@@ -554,31 +554,29 @@ public class DataAccess  {
 	}
 	
 	
-	public void returnMoneyTravelers(List<Reservation> resList, String email) {
-	    Driver driver = db.find(Driver.class, email);
-	    
-	    for (Reservation res : resList) {
-	        if (res.isPayed()) {
-	            processRefund(res, driver);
-	        }
-	    }
+	public void returnMoneyTravelers(List<Reservation>resList, String email) {
+		try {
+			Traveler t;
+			Transaction trans;
+			Driver d = db.find(Driver.class, email);
+			for(Reservation res : resList) {
+				if(res.isPayed()) {
+					t = db.find(Traveler.class, res.getTraveler().getEmail());
+					t.setMoney(t.getMoney()+res.getCost());
+					trans = new Transaction(res.getCost(), res.getDriver(), res.getTraveler());
+					t.addTransaction(trans);
+					d.addTransaction(trans);
+					d.setMoney(d.getMoney()-res.getCost());
+					db.persist(t);
+					db.persist(d);
+					db.persist(trans);
+				}
+			}
+		}catch(NullPointerException e) {
+			db.getTransaction().commit();
+		}
 	}
 
-	private void processRefund(Reservation res, Driver driver) {
-	    Traveler traveler = db.find(Traveler.class, res.getTraveler().getEmail());
-	    float refundAmount = res.getCost();
-	    
-	    traveler.setMoney(traveler.getMoney() + refundAmount);
-	    driver.setMoney(driver.getMoney() - refundAmount);
-	    
-	    Transaction transaction = new Transaction(refundAmount, driver, traveler);
-	    traveler.addTransaction(transaction);
-	    driver.addTransaction(transaction);
-	    
-	    db.persist(traveler);
-	    db.persist(driver);
-	    db.persist(transaction);
-	}
 	
 	public List<Ride> getDriverRides(String email){
 		db.getTransaction().begin();
