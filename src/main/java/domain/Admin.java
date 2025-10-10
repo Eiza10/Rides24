@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlID;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Admin implements Serializable{
+public class Admin implements User, Serializable{
 	
 	/**
 	 * 
@@ -31,6 +31,7 @@ public class Admin implements Serializable{
 		this.password=password;
 	}
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
@@ -38,7 +39,8 @@ public class Admin implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -47,6 +49,7 @@ public class Admin implements Serializable{
 		this.password = password;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}

@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Traveler implements Serializable{
+public class Traveler implements User, Serializable{
 	/**
 	 * 
 	 */
@@ -62,6 +62,7 @@ public class Traveler implements Serializable{
 		this.alerts = alerts;
 	}
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
@@ -82,6 +83,7 @@ public class Traveler implements Serializable{
 		return serialVersionUID;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -106,6 +108,7 @@ public class Traveler implements Serializable{
 		this.complaints = complaints;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}

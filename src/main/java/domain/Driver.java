@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Driver implements Serializable{
+public class Driver implements User, Serializable{
 	
 	/**
 	 * 
@@ -56,7 +56,7 @@ public class Driver implements Serializable{
 		}
 	}
 	
-	
+	@Override
 	public String getEmail() {
 		return email;
 	}
@@ -77,6 +77,7 @@ public class Driver implements Serializable{
 		return serialVersionUID;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -85,6 +86,7 @@ public class Driver implements Serializable{
 		this.password = password;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}

@@ -25,6 +25,7 @@ import domain.Reservation;
 import domain.Ride;
 import domain.Transaction;
 import domain.Traveler;
+import domain.User;
 import exceptions.AlertAlreadyExistsException;
 import exceptions.CarAlreadyExistsException;
 import exceptions.NotEnoughAvailableSeatsException;
@@ -356,50 +357,55 @@ public class DataAccess  {
 		}
 	}
 	
-	public Driver getDriverByEmail(String email, String password) throws UserDoesNotExistException, PasswordDoesNotMatchException{
-		db.getTransaction().begin();
-		Driver d = db.find(Driver.class, email);
-		db.getTransaction().commit();
-		if(d==null) {
-			this.close();
-			throw new UserDoesNotExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserDoesNotExist"));
-		}
-		if(!d.getPassword().equals(password)) {
-			this.close();
-			throw new PasswordDoesNotMatchException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.PasswordDoesNotMatch"));
-		}
-		return d;
-	}
+    /**
+     * Generic method to retrieve and authenticate a user by email
+     * 
+     * @param email the user's email
+     * @param password the user's password
+     * @param userClass the class type of the user (Driver, Traveler, or Admin)
+     * @return the authenticated user
+     * @throws UserDoesNotExistException if user is not found
+     * @throws PasswordDoesNotMatchException if password doesn't match
+     */
+    private <T extends User> T getUserByEmail(String email, String password, Class<T> userClass) 
+            throws UserDoesNotExistException, PasswordDoesNotMatchException {
+        
+        db.getTransaction().begin();
+        T user = db.find(userClass, email);
+        db.getTransaction().commit();
+        
+        if (user == null) {
+            this.close();
+            throw new UserDoesNotExistException(
+                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserDoesNotExist"));
+        }
+        
+        if (!user.getPassword().equals(password)) {
+            this.close();
+            throw new PasswordDoesNotMatchException(
+                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.PasswordDoesNotMatch"));
+        }
+        
+        return user;
+    }
+
+
+    public Driver getDriverByEmail(String email, String password) 
+            throws UserDoesNotExistException, PasswordDoesNotMatchException {
+        return getUserByEmail(email, password, Driver.class);
+    }
+
+
+    public Traveler getTravelerByEmail(String email, String password) 
+            throws UserDoesNotExistException, PasswordDoesNotMatchException {
+        return getUserByEmail(email, password, Traveler.class);
+    }
 	
-	public Traveler getTravelerByEmail(String email, String password) throws UserDoesNotExistException, PasswordDoesNotMatchException{
-		db.getTransaction().begin();
-		Traveler t = db.find(Traveler.class, email);
-		db.getTransaction().commit();
-		if(t==null) {
-			this.close();
-			throw new UserDoesNotExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserDoesNotExist"));
-		}
-		if(!t.getPassword().equals(password)) {
-			this.close();
-			throw new PasswordDoesNotMatchException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.PasswordDoesNotMatch"));
-		}
-		return t;
-	}
 	
-	public Admin getAdminByEmail(String email, String password) throws UserDoesNotExistException, PasswordDoesNotMatchException{
-		db.getTransaction().begin();
-		Admin a = db.find(Admin.class, email);
-		db.getTransaction().commit();
-		if(a==null) {
-			this.close();
-			throw new UserDoesNotExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserDoesNotExist"));
-		}
-		if(!a.getPassword().equals(password)) {
-			this.close();
-			throw new PasswordDoesNotMatchException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.PasswordDoesNotMatch"));
-		}
-		return a;
-	}
+    public Admin getAdminByEmail(String email, String password) 
+            throws UserDoesNotExistException, PasswordDoesNotMatchException {
+        return getUserByEmail(email, password, Admin.class);
+    }
 	
 	public void pay(Reservation res) throws NotEnoughMoneyException{
 		db.getTransaction().begin();

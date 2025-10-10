@@ -68,3 +68,111 @@ Type domain.Alert is not enhanced.
 [2025-10-10 12:50:37 #11 type] 
 Type domain.Admin is not enhanced.
 
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-10 22:06:55 #1 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1034-1048)
+
+[2025-10-10 22:06:55 #2 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' is opened by 16860@PC_HARITZ
+
+[2025-10-10 22:06:55 #3 type.registry] 
+New type domain.User
+
+[2025-10-10 22:06:55 #4 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-10 22:06:55 #5 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-10 22:06:55 #6 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-10 22:06:55 #7 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-10 22:06:55 #8 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-10 22:06:55 #9 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-10 22:06:55 #10 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-10 22:06:55 #11 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-10 22:06:55 #12 type] 
+Type domain.Admin is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-10 22:13:20 #1 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1049-1049)
+
+[2025-10-10 22:13:20 #2 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' is opened by 25492@PC_HARITZ
+
+[2025-10-10 22:13:20 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-10 22:13:20 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-10 22:13:20 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-10 22:13:20 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-10 22:13:20 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-10 22:13:20 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-10 22:13:20 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-10 22:13:20 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-10 22:13:20 #11 type] 
+Type domain.Admin is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-10 22:13:45 #1 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1050-1059)
+
+[2025-10-10 22:13:45 #2 store] 
+Database 'C:\Users\indeg\Desktop\UNI\Rides24\src\main\resources\rides.temp' is opened by 20724@PC_HARITZ
+
+[2025-10-10 22:13:45 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-10 22:13:45 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-10 22:13:45 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-10 22:13:45 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-10 22:13:45 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-10 22:13:45 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-10 22:13:45 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-10 22:13:45 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-10 22:13:45 #11 type] 
+Type domain.Admin is not enhanced.
+
