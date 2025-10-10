@@ -25,8 +25,8 @@ public class Complaint {
 		super();
 	}
 	
-	public Complaint (String complaint, Reservation r){
-		this.description=complaint;
+	public Complaint (String description, Reservation r){
+		this.description=description;
 		this.res=r;
 	}
 
@@ -42,8 +42,8 @@ public class Complaint {
 		return description;
 	}
 
-	public void setDescription(String complaint) {
-		this.description = complaint;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Reservation getRes() {
