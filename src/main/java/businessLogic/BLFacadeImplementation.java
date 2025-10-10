@@ -127,9 +127,9 @@ public class BLFacadeImplementation  implements BLFacade {
     }
     
     @WebMethod
-    public Reservation createReservation(int hm, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
+    public Reservation createReservation(int nTravelers, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
     	dbManager.open();
-    	Reservation res = dbManager.createReservation(hm, rideNumber, travelerEmail);
+    	Reservation res = dbManager.createReservation(nTravelers, rideNumber, travelerEmail);
     	dbManager.close();
     	return res;
     }
@@ -174,16 +174,16 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
     @WebMethod
-	public void takeMoneyDriver(String email, int hm) throws NotEnoughMoneyException{
+	public void takeMoneyDriver(String email, int nTravelers) throws NotEnoughMoneyException{
 		dbManager.open();
-		dbManager.takeMoneyDriver(email, hm);
+		dbManager.takeMoneyDriver(email, nTravelers);
     	dbManager.close();
 	}
 	
     @WebMethod
-	public void putMoneyTraveler(String email, int hm) {
+	public void putMoneyTraveler(String email, int nTravelers) {
 		dbManager.open();
-    	dbManager.putMoneyTraveler(email, hm);
+    	dbManager.putMoneyTraveler(email, nTravelers);
     	dbManager.close();
 	}
 	

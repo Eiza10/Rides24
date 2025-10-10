@@ -137,8 +137,8 @@ public class Traveler implements User, Serializable{
 		this.setMoney(this.getMoney()+amount);
 	}
 	
-	public Reservation makeReservation(Ride r, int hm) {
-		Reservation res = new Reservation(hm, r, this);
+	public Reservation makeReservation(Ride r, int nTravelers) {
+		Reservation res = new Reservation(nTravelers, r, this);
 		this.reservations.add(res);
 		return res;
 	}

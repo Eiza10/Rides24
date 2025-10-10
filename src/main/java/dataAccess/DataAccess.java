@@ -325,7 +325,7 @@ public class DataAccess  {
 	}
 	
 	public Reservation createReservation(int nTravelers, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
-		System.out.println(">> DataAccess: createReservation=> how many seats= "+hm+" ride number= "+rideNumber+" traveler="+travelerEmail);
+		System.out.println(">> DataAccess: createReservation=> how many seats= "+nTravelers+" ride number= "+rideNumber+" traveler="+travelerEmail);
 		try {
 			db.getTransaction().begin();
 			Ride r = db.find(Ride.class, rideNumber);
