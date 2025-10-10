@@ -1,0 +1,70 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-10 12:50:22 #1 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' has been recovered (tr. 978-1025)
+
+[2025-10-10 12:50:22 #2 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' is opened by 3112@DESKTOP-ARIC0A9
+
+[2025-10-10 12:50:22 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-10 12:50:22 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-10 12:50:22 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-10 12:50:22 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-10 12:50:22 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-10 12:50:22 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-10 12:50:22 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-10 12:50:22 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-10 12:50:22 #11 type] 
+Type domain.Admin is not enhanced.
+
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-10 12:50:37 #1 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1027-1033)
+
+[2025-10-10 12:50:37 #2 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' is opened by 12152@DESKTOP-ARIC0A9
+
+[2025-10-10 12:50:37 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-10 12:50:37 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-10 12:50:37 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-10 12:50:37 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-10 12:50:37 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-10 12:50:37 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-10 12:50:37 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-10 12:50:37 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-10 12:50:37 #11 type] 
+Type domain.Admin is not enhanced.
+
