@@ -8,14 +8,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+
 import configuration.ConfigXML;
 import configuration.UtilDate;
-import domain.*;
-import exceptions.*;
+import domain.Admin;
+import domain.Alert;
+import domain.Car;
+import domain.Complaint;
+import domain.Driver;
+import domain.Reservation;
+import domain.Ride;
+import domain.Transaction;
+import domain.Traveler;
+import exceptions.AlertAlreadyExistsException;
+import exceptions.CarAlreadyExistsException;
+import exceptions.NotEnoughAvailableSeatsException;
+import exceptions.NotEnoughMoneyException;
+import exceptions.PasswordDoesNotMatchException;
+import exceptions.ReservationAlreadyExistException;
+import exceptions.RideAlreadyExistException;
+import exceptions.RideMustBeLaterThanTodayException;
+import exceptions.UserAlreadyExistException;
+import exceptions.UserDoesNotExistException;
 
 /**
  * It implements the data access to the objectDb database
@@ -23,7 +42,11 @@ import exceptions.*;
 public class DataAccess  {
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
-	static final String BILBO = "Bilbo";
+	private static final String BILBO = "Bilbo";
+	private static final String DONOSTIA = "Donostia";
+	private static final String GASTEIZ = "Gasteiz";
+	private static final String IRUÑA = "Iruña";
+	private static final String EIBAR = "Eibar";
 
 
 	ConfigXML c=ConfigXML.getInstance();
@@ -92,16 +115,16 @@ public class DataAccess  {
 
 			
 			//Create rides
-			driver1.addRide("Donostia", BILBO, UtilDate.newDate(year,month,15), 7, car1);
-			driver1.addRide("Donostia", "Gazteiz", UtilDate.newDate(year,month,6), 8, car1);
-			driver1.addRide(BILBO, "Donostia", UtilDate.newDate(year,month,25), 4, car5);
-			driver1.addRide("Donostia", "Iruña", UtilDate.newDate(year,month,7), 8, car5);
+			driver1.addRide(DONOSTIA, BILBO, UtilDate.newDate(year,month,15), 7, car1);
+			driver1.addRide(DONOSTIA, GASTEIZ, UtilDate.newDate(year,month,6), 8, car1);
+			driver1.addRide(BILBO, DONOSTIA, UtilDate.newDate(year,month,25), 4, car5);
+			driver1.addRide(DONOSTIA, IRUÑA, UtilDate.newDate(year,month,7), 8, car5);
 			
-			driver2.addRide("Donostia", BILBO, UtilDate.newDate(year,month,15), 3, car2);
-			driver2.addRide(BILBO, "Donostia", UtilDate.newDate(year,month,25), 5, car4);
-			driver2.addRide("Eibar", "Gasteiz", UtilDate.newDate(year,month,6), 5, car2);
+			driver2.addRide(DONOSTIA, BILBO, UtilDate.newDate(year,month,15), 3, car2);
+			driver2.addRide(BILBO, DONOSTIA, UtilDate.newDate(year,month,25), 5, car4);
+			driver2.addRide(EIBAR, GASTEIZ, UtilDate.newDate(year,month,6), 5, car2);
 
-			driver3.addRide(BILBO, "Donostia", UtilDate.newDate(year,month,14), 3, car3);
+			driver3.addRide(BILBO, DONOSTIA, UtilDate.newDate(year,month,14), 3, car3);
 
 			Admin admin1 = new Admin("aitzol@gmail.com", "Aitzol", "123");
 			Admin admin2 = new Admin("eneko@gmail.com", "Eneko", "123");
@@ -530,27 +553,31 @@ public class DataAccess  {
 		}
 	}
 	
-	public void returnMoneyTravelers(List<Reservation>resList, String email) {
-		try { //try1
-			Traveler t; //1
-			Transaction trans; //2
-			Driver d = db.find(Driver.class, email);//3
-			for(Reservation res : resList) {//for-1
-				if(res.isPayed()) { //if-1
-					t = db.find(Traveler.class, res.getTraveler().getEmail()); //4
-					t.setMoney(t.getMoney()+res.getCost()); //5
-					trans = new Transaction(res.getCost(), res.getDriver(), res.getTraveler()); //6
-					t.addTransaction(trans); //7
-					d.addTransaction(trans); //8
-					d.setMoney(d.getMoney()-res.getCost()); //9
-					db.persist(t); //10
-					db.persist(d); //11
-					db.persist(trans); //12
-				}
-			}
-		}catch(NullPointerException e) {
-			db.getTransaction().commit(); //13
-		}
+	
+	public void returnMoneyTravelers(List<Reservation> resList, String email) {
+	    Driver driver = db.find(Driver.class, email);
+	    
+	    for (Reservation res : resList) {
+	        if (res.isPayed()) {
+	            processRefund(res, driver);
+	        }
+	    }
+	}
+
+	private void processRefund(Reservation res, Driver driver) {
+	    Traveler traveler = db.find(Traveler.class, res.getTraveler().getEmail());
+	    float refundAmount = res.getCost();
+	    
+	    traveler.setMoney(traveler.getMoney() + refundAmount);
+	    driver.setMoney(driver.getMoney() - refundAmount);
+	    
+	    Transaction transaction = new Transaction(refundAmount, driver, traveler);
+	    traveler.addTransaction(transaction);
+	    driver.addTransaction(transaction);
+	    
+	    db.persist(traveler);
+	    db.persist(driver);
+	    db.persist(transaction);
 	}
 	
 	public List<Ride> getDriverRides(String email){
@@ -600,27 +627,34 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
-	public void addRatingToTraveler(String e, int z, Integer resCode) {
+	
+	private void addRating(String email, int rating, Integer reservationCode, Class<?> userClass, boolean isDriver) {
 		db.getTransaction().begin();
-		Reservation r = db.find(Reservation.class, resCode);
-		Traveler t = db.find(Traveler.class, e);
-		r.setRatedD(true);
-		t.addRating(z);
-		db.persist(t);
-		db.persist(r);
+		Reservation reservation = db.find(Reservation.class, reservationCode);
+		Object user = db.find(userClass, email);
+
+		if (isDriver) {
+			((Driver) user).addRating(rating);
+			reservation.setRatedT(true);
+		} else {
+			((Traveler) user).addRating(rating);
+			reservation.setRatedD(true);
+		}
+
+		db.persist(user);
+		db.persist(reservation);
 		db.getTransaction().commit();
+	}
+
+	public void addRatingToDriver(String email, int rating, Integer reservationCode) {
+		addRating(email, rating, reservationCode, Driver.class, true);
+	}
+
+	public void addRatingToTraveler(String email, int rating, Integer reservationCode) {
+		addRating(email, rating, reservationCode, Traveler.class, false);
 	}
 	
-	public void addRatingToDriver(String email, int z, Integer resCode){
-		db.getTransaction().begin();
-		Driver d = db.find(Driver.class, email);
-		Reservation r = db.find(Reservation.class, resCode);
-		d.addRating(z);
-		r.setRatedT(true);
-		db.persist(d);
-		db.persist(r);
-		db.getTransaction().commit();
-	}
+	
 	public void createAlert(Traveler t, String jatorria, String helmuga) throws AlertAlreadyExistsException{
 		db.getTransaction().begin();
 		if(!this.doesAlertExist(t, jatorria, helmuga)) {

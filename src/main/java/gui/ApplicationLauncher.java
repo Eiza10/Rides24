@@ -20,19 +20,19 @@ public class ApplicationLauncher {
 	
 	public static void main(String[] args) {
 
-		ConfigXML c=ConfigXML.getInstance();
+		ConfigXML config=ConfigXML.getInstance();
 	
-		System.out.println(c.getLocale());
+		System.out.println(config.getLocale());
 		
-		Locale.setDefault(new Locale(c.getLocale()));
+		Locale.setDefault(new Locale(config.getLocale()));
 		
 		System.out.println("Locale: "+Locale.getDefault());
 		
 	    Driver driver=new Driver("driver3@gmail.com","Test Driver", "123");
 
 		
-		MainGUI a=new MainGUI();
-		a.setVisible(true);
+		MainGUI mainWindow=new MainGUI();
+		mainWindow.setVisible(true);
 
 
 		try {
@@ -40,17 +40,17 @@ public class ApplicationLauncher {
 			BLFacade appFacadeInterface;
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 			
-			if (c.isBusinessLogicLocal()) {
+			if (config.isBusinessLogicLocal()) {
 			
-				DataAccess da= new DataAccess();
-				appFacadeInterface=new BLFacadeImplementation(da);
+				DataAccess dataAccess= new DataAccess();
+				appFacadeInterface=new BLFacadeImplementation(dataAccess);
 
 				
 			}
 			
 			else { //If remote
 				
-				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";
+				 String serviceName= "http://"+config.getBusinessLogicNode() +":"+ config.getBusinessLogicPort()+"/ws/"+config.getBusinessLogicName()+"?wsdl";
 				 
 				URL url = new URL(serviceName);
 
@@ -70,8 +70,8 @@ public class ApplicationLauncher {
 
 			
 		}catch (Exception e) {
-			a.jLabelWelcome.setText("Error: "+e.toString());
-			a.jLabelWelcome.setForeground(Color.RED);	
+			mainWindow.jLabelWelcome.setText("Error: "+e.toString());
+			mainWindow.jLabelWelcome.setForeground(Color.RED);	
 			
 			System.out.println("Error in ApplicationLauncher: "+e.toString());
 		}
