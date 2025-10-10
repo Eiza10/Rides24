@@ -17,7 +17,7 @@ public class Complaint {
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer id;
-	private String complaint;
+	private String description;
 	private Reservation res;
 	private boolean denied = false;
 	
@@ -26,7 +26,7 @@ public class Complaint {
 	}
 	
 	public Complaint (String complaint, Reservation r){
-		this.complaint=complaint;
+		this.description=complaint;
 		this.res=r;
 	}
 
@@ -38,12 +38,12 @@ public class Complaint {
 		this.id = id;
 	}
 
-	public String getComplaint() {
-		return complaint;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setComplaint(String complaint) {
-		this.complaint = complaint;
+	public void setDescription(String complaint) {
+		this.description = complaint;
 	}
 
 	public Reservation getRes() {

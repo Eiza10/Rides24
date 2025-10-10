@@ -119,7 +119,7 @@ public class CheckComplaintAdminGUI extends JFrame {
 		jButtonMoreInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Complaint com = facade.getAllComplaint().get(tableReservations.getSelectedRow());
-				jLabelComplaint.setText(com.getComplaint());
+				jLabelComplaint.setText(com.getDescription());
 			}
 		});
 		jButtonMoreInfo.setBounds(75, 425, 94, 26);

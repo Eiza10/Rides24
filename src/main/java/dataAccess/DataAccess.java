@@ -410,28 +410,51 @@ public class DataAccess  {
 	public void pay(Reservation res) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
 		try {
-			Traveler t = db.find(Traveler.class, res.getTraveler().getEmail());
-			Driver d = db.find(Driver.class, res.getDriver().getEmail());
-			float price = res.getHmTravelers()*res.getRide().getPrice();
-			if(t.getMoney()-price<0){
-				db.getTransaction().commit();
-				throw new NotEnoughMoneyException();
-			}
-			Reservation r = db.find(Reservation.class, res.getReservationCode());
-			r.setPayed(true);
-			t.setMoney(t.getMoney()-price);
-			d.setMoney(d.getMoney()+price);
-			Transaction tr = new Transaction(price, d, t);
-			d.addTransaction(tr);
-			t.addTransaction(tr);
-			db.persist(r);
-			db.persist(tr);
-			db.persist(d); 
-			db.persist(t);
+			Traveler traveler = db.find(Traveler.class, res.getTraveler().getEmail());
+			Driver driver = db.find(Driver.class, res.getDriver().getEmail());
+			float price = calculateReservationPrice(res);
+			
+			validateTravelerHasSufficientFunds(traveler, price);
+			
+			Reservation reservation = db.find(Reservation.class, res.getReservationCode());
+			processPayment(reservation, traveler, driver, price);
+			
 			db.getTransaction().commit();
 		}catch(NullPointerException e) {
 			db.getTransaction().commit();
 		}	
+	}
+	
+	private float calculateReservationPrice(Reservation res) {
+		return res.getnTravelers() * res.getRide().getPrice();
+	}
+	
+	private void validateTravelerHasSufficientFunds(Traveler traveler, float price) throws NotEnoughMoneyException {
+		if(traveler.getMoney() - price < 0) {
+			db.getTransaction().commit();
+			throw new NotEnoughMoneyException();
+		}
+	}
+	
+	private void processPayment(Reservation reservation, Traveler traveler, Driver driver, float price) {
+		reservation.setPayed(true);
+		transferMoneyBetweenUsers(traveler, driver, price);
+		Transaction transaction = new Transaction(price, driver, traveler);
+		recordTransaction(reservation, transaction, traveler, driver);
+	}
+	
+	private void transferMoneyBetweenUsers(Traveler traveler, Driver driver, float amount) {
+		traveler.setMoney(traveler.getMoney() - amount);
+		driver.setMoney(driver.getMoney() + amount);
+	}
+	
+	private void recordTransaction(Reservation reservation, Transaction transaction, Traveler traveler, Driver driver) {
+		driver.addTransaction(transaction);
+		traveler.addTransaction(transaction);
+		db.persist(reservation);
+		db.persist(transaction);
+		db.persist(driver);
+		db.persist(traveler);
 	}
 	
 	public List<Reservation> getDriverReservations(String email){
@@ -616,7 +639,6 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		String driverEmail = res.getDriver().getEmail();
 		String travelerEmail = res.getTraveler().getEmail();
-		Integer rideId = res.getRide().getRideNumber();
 		Driver d = db.find(Driver.class, driverEmail);
 		Traveler t = db.find(Traveler.class, travelerEmail);
 		Reservation r = db.find(Reservation.class, res.getReservationCode());
@@ -748,22 +770,40 @@ public class DataAccess  {
 	public void acceptComplaint(Complaint co) {
 		db.getTransaction().begin();
 		Complaint complaint = db.find(Complaint.class, co.getId());
-		Driver d = db.find(Driver.class, complaint.getDriverEmail());
-		Traveler t = db.find(Traveler.class, complaint.getTravelerEmail());
-		Reservation res = db.find(Reservation.class, co.getRes().getReservationCode());
-		float price = res.getHmTravelers()*res.getRide().getPrice();
-		d.setMoney(d.getMoney()-price);
-		t.setMoney(t.getMoney()+price);
-		d.removeComplaint(complaint);
-		t.removeComplaint(complaint);
-		Transaction tra = new Transaction(price, t, d);
-		d.addTransaction(tra);
-		t.addTransaction(tra);
-		db.persist(tra);
-		db.persist(t);
-		db.persist(d);
-		db.remove(complaint);
+		Driver driver = db.find(Driver.class, complaint.getDriverEmail());
+		Traveler traveler = db.find(Traveler.class, complaint.getTravelerEmail());
+		Reservation reservation = db.find(Reservation.class, co.getRes().getReservationCode());
+		
+		float refundAmount = calculateReservationPrice(reservation);
+		processComplaintRefund(driver, traveler, complaint, refundAmount);
+		
 		db.getTransaction().commit();
+	}
+	
+	private void processComplaintRefund(Driver driver, Traveler traveler, Complaint complaint, float refundAmount) {
+		refundMoneyToTraveler(driver, traveler, refundAmount);
+		removeComplaintFromUsers(driver, traveler, complaint);
+		Transaction refundTransaction = new Transaction(refundAmount, traveler, driver);
+		recordComplaintRefund(refundTransaction, driver, traveler, complaint);
+	}
+	
+	private void refundMoneyToTraveler(Driver driver, Traveler traveler, float amount) {
+		driver.setMoney(driver.getMoney() - amount);
+		traveler.setMoney(traveler.getMoney() + amount);
+	}
+	
+	private void removeComplaintFromUsers(Driver driver, Traveler traveler, Complaint complaint) {
+		driver.removeComplaint(complaint);
+		traveler.removeComplaint(complaint);
+	}
+	
+	private void recordComplaintRefund(Transaction transaction, Driver driver, Traveler traveler, Complaint complaint) {
+		driver.addTransaction(transaction);
+		traveler.addTransaction(transaction);
+		db.persist(transaction);
+		db.persist(traveler);
+		db.persist(driver);
+		db.remove(complaint);
 	}
 	
 	public void denyComplaintAdmin(Complaint co) {

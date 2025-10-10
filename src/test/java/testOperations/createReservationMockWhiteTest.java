@@ -233,7 +233,7 @@ public class createReservationMockWhiteTest {
 	    assertNotNull(reservation);
 	    assertEquals(traveler, reservation.getTraveler());
 	    assertEquals(ride, reservation.getRide());
-	    assertEquals(hm, reservation.getHmTravelers());
+	    assertEquals(hm, reservation.getnTravelers());
 	}
 
 

@@ -22,7 +22,7 @@ public class Reservation implements Serializable {
 	private Integer reservationCode;
 	private Boolean accepted;
 	private boolean payed = false;
-	private int hmTravelers;
+	private int nTravelers;
 	private Ride ride;
 	private Traveler traveler;
 	private Driver driver;
@@ -36,11 +36,11 @@ public class Reservation implements Serializable {
 	}
 	
 	public Reservation(int hm, Ride r, Traveler t) {
-		this.hmTravelers=hm;
+		this.nTravelers=hm;
 		this.ride=r;
 		this.traveler=t;
 		this.driver=ride.getDriver();
-		this.cost=this.ride.getPrice()*this.hmTravelers;
+		this.cost=this.ride.getPrice()*this.nTravelers;
 		this.accepted=false;
 		this.ratedT=false;
 		this.ratedD=false;
@@ -122,12 +122,12 @@ public class Reservation implements Serializable {
 		this.cost = cost;
 	}
 
-	public int getHmTravelers() {
-		return hmTravelers;
+	public int getnTravelers() {
+		return nTravelers;
 	}
 
-	public void setHmTravelers(int hmTravelers) {
-		this.hmTravelers = hmTravelers;
+	public void setnTravelers(int hmTravelers) {
+		this.nTravelers = hmTravelers;
 	}
 
 	public Ride getRide() {

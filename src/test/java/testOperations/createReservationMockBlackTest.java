@@ -129,6 +129,6 @@ public class createReservationMockBlackTest {
         assertNotNull("Reservation should not be null", reservation);
         assertEquals(traveler, reservation.getTraveler());
         assertEquals(ride, reservation.getRide());
-        assertEquals(1, reservation.getHmTravelers());
+        assertEquals(1, reservation.getnTravelers());
     }
 }

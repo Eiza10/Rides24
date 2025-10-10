@@ -55,7 +55,7 @@ public class DriverToRateGUI extends JFrame {
 			for (Reservation res: resList){
 				Vector<Object> row = new Vector<Object>();
 				row.add(res.getTraveler().getName());
-				row.add(res.getHmTravelers());
+				row.add(res.getnTravelers());
 				row.add(res.getRide().getFrom()+"-"+res.getRide().getTo());
 				row.add(res); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,3)
 				tableModelReservations.addRow(row);		

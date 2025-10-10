@@ -197,7 +197,7 @@ public class createReservationBDBlackTest {
         assertNotNull("Reservation should have a ride", reservation.getRide());
         assertEquals("Traveler email should match", "traveler@gmail.com", reservation.getTraveler().getEmail());
         assertEquals("Ride should match", ride.getRideNumber(), reservation.getRide().getRideNumber());
-        assertEquals("Number of travelers should be 1", 1, reservation.getHmTravelers());
+        assertEquals("Number of travelers should be 1", 1, reservation.getnTravelers());
         assertTrue("Reservation should have a positive reservation code", reservation.getReservationCode() > 0);
     }
 
@@ -252,7 +252,7 @@ public class createReservationBDBlackTest {
             // Reserve exactly the maximum available seats (1 seat)
             Reservation reservation = sut.createReservation(1, ride.getRideNumber(), "traveler@gmail.com");
             assertNotNull("Reservation should be created when requesting exactly available seats", reservation);
-            assertEquals("Should reserve exactly 1 seat", 1, reservation.getHmTravelers());
+            assertEquals("Should reserve exactly 1 seat", 1, reservation.getnTravelers());
             
         } catch (Exception e) {
             fail("No exception expected for valid edge case: " + e);

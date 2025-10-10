@@ -121,7 +121,7 @@ public class CheckComplaintGUI extends JFrame {
 		jButtonMoreInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Complaint com = facade.getDriverComplaint(email).get(tableReservations.getSelectedRow());
-				jLabelComplaint.setText(com.getComplaint());
+				jLabelComplaint.setText(com.getDescription());
 			}
 		});
 		jButtonMoreInfo.setBounds(75, 425, 94, 26);

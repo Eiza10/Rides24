@@ -209,6 +209,6 @@ public class createReservationBDWhiteTest {
         assertNotNull("Reservation should not be null", reservation);
         assertEquals("Traveler email should match", "traveler@gmail.com", reservation.getTraveler().getEmail());
         assertEquals("Ride should match", ride.getRideNumber(), reservation.getRide().getRideNumber());
-        assertEquals("Number of travelers should be 1", 1, reservation.getHmTravelers());
+        assertEquals("Number of travelers should be 1", 1, reservation.getnTravelers());
     }
 }

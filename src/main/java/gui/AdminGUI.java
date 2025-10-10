@@ -28,7 +28,6 @@ public class AdminGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel jContentPane = null;
-	private JButton jButtonQueryQueries = null;
 
     private static BLFacade appFacadeInterface;
 	
