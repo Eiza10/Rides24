@@ -205,10 +205,6 @@ public class Ride implements Serializable {
 		this.reservations = reservations;
 	}
 
-	public void setnPlaces(int nPlaces) {
-		this.nPlaces = nPlaces;
-	}
-
 	public String toString(){
 		return rideNumber+";"+";"+from+";"+to+";"+date;  
 	}

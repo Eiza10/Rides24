@@ -26,6 +26,7 @@ public class AdminGUI extends JFrame {
 	
     private Admin admin;
 	private static final long serialVersionUID = 1L;
+	private static final String ETIQUETAS = "Etiquetas";
 
 	private JPanel jContentPane = null;
 
@@ -58,37 +59,21 @@ public class AdminGUI extends JFrame {
 		BLFacade facade = MainGUI.getBusinessLogic();
 		// this.setSize(271, 295);
 		this.setSize(495, 290);
-		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("DriverAndTravelerGUI.Welcome")+" "+admin.getName());
+		jLabelSelectOption = new JLabel(ResourceBundle.getBundle(ETIQUETAS).getString("DriverAndTravelerGUI.Welcome")+" "+admin.getName());
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 		jLabelSelectOption.setForeground(Color.BLACK);
 		jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		rdbtnNewRadioButton = new JRadioButton("English");
-		rdbtnNewRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("en"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();				}
-		});
+		rdbtnNewRadioButton.addActionListener(createLocaleActionListener("en"));
 		buttonGroup.add(rdbtnNewRadioButton);
 		
 		rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Locale.setDefault(new Locale("eus"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();				}
-		});
+		rdbtnNewRadioButton_1.addActionListener(createLocaleActionListener("eus"));
 		buttonGroup.add(rdbtnNewRadioButton_1);
 		
 		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
-		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Locale.setDefault(new Locale("es"));
-				System.out.println("Locale: "+Locale.getDefault());
-				paintAgain();
-			}
-		});
+		rdbtnNewRadioButton_2.addActionListener(createLocaleActionListener("es"));
 		buttonGroup.add(rdbtnNewRadioButton_2);
 	
 		panel = new JPanel();
@@ -100,14 +85,14 @@ public class AdminGUI extends JFrame {
 		jContentPane.setLayout(new GridLayout(6, 2, 0, 0));
 		jContentPane.add(jLabelSelectOption);
 		
-		jButtonLogOut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("DriverAndTravelerGUI.JButtonLogOut")); //$NON-NLS-1$ //$NON-NLS-2$
+		jButtonLogOut = new JButton(ResourceBundle.getBundle(ETIQUETAS).getString("DriverAndTravelerGUI.JButtonLogOut")); //$NON-NLS-1$ //$NON-NLS-2$
 		jButtonLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 		
-		jButtonHandle = new JButton(ResourceBundle.getBundle("Etiquetas").getString("AdminGUI.jButtonHandle")); //$NON-NLS-1$ //$NON-NLS-2$
+		jButtonHandle = new JButton(ResourceBundle.getBundle(ETIQUETAS).getString("AdminGUI.jButtonHandle")); //$NON-NLS-1$ //$NON-NLS-2$
 		jButtonHandle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new CheckComplaintAdminGUI();
@@ -120,7 +105,7 @@ public class AdminGUI extends JFrame {
 		
 		
 		setContentPane(jContentPane);
-		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") + " - Admin :"+ admin.getName());
+		setTitle(ResourceBundle.getBundle(ETIQUETAS).getString("MainGUI.MainTitle") + " - Admin :"+ admin.getName());
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -130,11 +115,26 @@ public class AdminGUI extends JFrame {
 		});
 	}
 	
+	/**
+	 * Creates a locale change action listener
+	 * @param localeCode the locale code (e.g., "en", "es", "eus")
+	 * @return ActionListener that changes locale and refreshes UI
+	 */
+	private ActionListener createLocaleActionListener(String localeCode) {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Locale.setDefault(new Locale(localeCode));
+				System.out.println("Locale: " + Locale.getDefault());
+				paintAgain();
+			}
+		};
+	}
+	
 	private void paintAgain() {
-		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("DriverAndTravelerGUI.Welcome")+" "+admin.getName());
-		jButtonLogOut.setText(ResourceBundle.getBundle("Etiquetas").getString("DriverAndTravelerGUI.JButtonLogOut"));
-		jButtonHandle.setText(ResourceBundle.getBundle("Etiquetas").getString("AdminGUI.jButtonHandle"));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ " - admin :"+admin.getName());
+		jLabelSelectOption.setText(ResourceBundle.getBundle(ETIQUETAS).getString("DriverAndTravelerGUI.Welcome")+" "+admin.getName());
+		jButtonLogOut.setText(ResourceBundle.getBundle(ETIQUETAS).getString("DriverAndTravelerGUI.JButtonLogOut"));
+		jButtonHandle.setText(ResourceBundle.getBundle(ETIQUETAS).getString("AdminGUI.jButtonHandle"));
+		this.setTitle(ResourceBundle.getBundle(ETIQUETAS).getString("MainGUI.MainTitle")+ " - admin :"+admin.getName());
 	}
 	
 } // @jve:decl-index=0:visual-constraint="0,0"
