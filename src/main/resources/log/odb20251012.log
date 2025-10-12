@@ -1,0 +1,35 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-12 19:50:10 #1 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1060-1068)
+
+[2025-10-12 19:50:10 #2 store] 
+Database 'C:\Users\Asus\Documents\GitHub\Rides24\src\main\resources\rides.temp' is opened by 2836@DESKTOP-ARIC0A9
+
+[2025-10-12 19:50:10 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-12 19:50:10 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-12 19:50:10 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-12 19:50:10 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-12 19:50:10 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-12 19:50:10 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-12 19:50:10 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-12 19:50:10 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-12 19:50:10 #11 type] 
+Type domain.Admin is not enhanced.
+

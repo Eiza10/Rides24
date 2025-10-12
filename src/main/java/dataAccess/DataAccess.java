@@ -46,7 +46,7 @@ public class DataAccess  {
 	private static final String BILBO = "Bilbo";
 	private static final String DONOSTIA = "Donostia";
 	private static final String GASTEIZ = "Gasteiz";
-	private static final String IRUÑA = "Iruña";
+	private static final String IRUNEA = "IRUNEA";
 	private static final String EIBAR = "Eibar";
 
 
@@ -119,7 +119,7 @@ public class DataAccess  {
 			driver1.addRide(DONOSTIA, BILBO, UtilDate.newDate(year,month,15), 7, car1);
 			driver1.addRide(DONOSTIA, GASTEIZ, UtilDate.newDate(year,month,6), 8, car1);
 			driver1.addRide(BILBO, DONOSTIA, UtilDate.newDate(year,month,25), 4, car5);
-			driver1.addRide(DONOSTIA, IRUÑA, UtilDate.newDate(year,month,7), 8, car5);
+			driver1.addRide(DONOSTIA, IRUNEA, UtilDate.newDate(year,month,7), 8, car5);
 			
 			driver2.addRide(DONOSTIA, BILBO, UtilDate.newDate(year,month,15), 3, car2);
 			driver2.addRide(BILBO, DONOSTIA, UtilDate.newDate(year,month,25), 5, car4);
