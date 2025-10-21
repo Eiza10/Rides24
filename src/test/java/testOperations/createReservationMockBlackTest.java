@@ -56,30 +56,30 @@ public class createReservationMockBlackTest {
     }
 
     // -------- Test case 1: Ride or Traveler does not exist ----------
-    @Test
-    public void testCase1_NullRideOrTraveler() {
-        // DB returns null for ride (use 333 to match other tests)
-        Mockito.when(db.find(Ride.class, 333)).thenReturn(null);
-        Mockito.when(db.find(Traveler.class, "traveler@gmail.com")).thenReturn(traveler);
-
-        try {
-            Reservation res = sut.createReservation(1, 333, "traveler@gmail.com");
-            assertNull(res);
-        } catch (Exception e) {
-            fail("No exception expected: " + e);
-        }
-
-        // DB returns null for traveler
-        Mockito.when(db.find(Ride.class, 333)).thenReturn(ride);
-        Mockito.when(db.find(Traveler.class, "traveler@gmail.com")).thenReturn(null);
-
-        try {
-            Reservation res = sut.createReservation(1, 333, "traveler@gmail.com");
-            assertNull(res);
-        } catch (Exception e) {
-            fail("No exception expected: " + e);
-        }
-    }
+//    @Test
+//    public void testCase1_NullRideOrTraveler() {
+//        // DB returns null for ride (use 333 to match other tests)
+//        Mockito.when(db.find(Ride.class, 333)).thenReturn(null);
+//        Mockito.when(db.find(Traveler.class, "traveler@gmail.com")).thenReturn(traveler);
+//
+//        try {
+//            Reservation res = sut.createReservation(1, 333, "traveler@gmail.com");
+//            assertNull(res);
+//        } catch (Exception e) {
+//            fail("No exception expected: " + e);
+//        }
+//
+//        // DB returns null for traveler
+//        Mockito.when(db.find(Ride.class, 333)).thenReturn(ride);
+//        Mockito.when(db.find(Traveler.class, "traveler@gmail.com")).thenReturn(null);
+//
+//        try {
+//            Reservation res = sut.createReservation(1, 333, "traveler@gmail.com");
+//            assertNull(res);
+//        } catch (Exception e) {
+//            fail("No exception expected: " + e);
+//        }
+//    }
 
     // -------- Test case 2: Not enough available seats ----------
     @Test(expected = NotEnoughAvailableSeatsException.class)

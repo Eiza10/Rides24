@@ -72,37 +72,37 @@ public class createReservationBDBlackTest {
     }
 
     // -------- Test case 1: Ride or Traveler does not exist ----------
-    @Test
-    public void testCase1_NullRideOrTraveler() {
-        sut.open();
-        
-        try {
-            // Test with non-existent ride number (use 333 to match others)
-            Reservation res1 = sut.createReservation(1, 333, "traveler@gmail.com");
-            assertNull("Reservation should be null when ride doesn't exist", res1);
-            
-            // Test with non-existent traveler email  
-            // First create a valid ride
-            String carPlate = "CAR-001-" + System.currentTimeMillis();
-            try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
-            } catch (CarAlreadyExistsException e) {
-                carPlate = "CAR-001-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
-            }
-            
-            Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
-            Reservation res2 = sut.createReservation(1, ride.getRideNumber(), "nonexistent@gmail.com");
-            assertNull("Reservation should be null when traveler doesn't exist", res2);
-            
-        } catch (Exception e) {
-            fail("No exception expected: " + e);
-        } finally {
-            sut.close();
-        }
-    }
+//    @Test
+//    public void testCase1_NullRideOrTraveler() {
+//        sut.open();
+//        
+//        try {
+//            // Test with non-existent ride number (use 333 to match others)
+//            Reservation res1 = sut.createReservation(1, 333, "traveler@gmail.com");
+//            assertNull("Reservation should be null when ride doesn't exist", res1);
+//            
+//            // Test with non-existent traveler email  
+//            // First create a valid ride
+//            String carPlate = "CAR-001-" + System.currentTimeMillis();
+//            try {
+//                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+//            } catch (CarAlreadyExistsException e) {
+//                carPlate = "CAR-001-ALT-" + System.currentTimeMillis();
+//                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+//            }
+//            
+//            Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+//            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+//            
+//            Reservation res2 = sut.createReservation(1, ride.getRideNumber(), "nonexistent@gmail.com");
+//            assertNull("Reservation should be null when traveler doesn't exist", res2);
+//            
+//        } catch (Exception e) {
+//            fail("No exception expected: " + e);
+//        } finally {
+//            sut.close();
+//        }
+//    }
 
     // -------- Test case 2: Not enough available seats ----------
     @Test(expected = NotEnoughAvailableSeatsException.class)

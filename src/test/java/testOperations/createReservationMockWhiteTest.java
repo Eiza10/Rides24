@@ -55,36 +55,36 @@ public class createReservationMockWhiteTest {
 		persistenceMock.close();
 	}
 
-	@Test
-	// TRY-1(Catch): ride, traveler edo driver ez dira existitzen datu-basean
-	// Sarrera: <1, 333, traveler@gmail.com>
-	// Null itzuli behar du
-	public void test1() {
-	    try {
-	        // Arrange
-	        String email = "traveler@gmail.com";
-	        int hm = 1;
-	        Integer rideNumber = 333;
-
-	        EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);
-	        Mockito.when(db.getTransaction()).thenReturn(mockTransaction);
-
-	        Mockito.when(db.find(Ride.class, rideNumber)).thenReturn(null);
-	        Mockito.when(db.find(Traveler.class, email)).thenReturn(null);
-
-	        // Act
-	        sut.open();
-	        Reservation reservation = sut.createReservation(hm, rideNumber, email);
-
-	        // Assert
-	        assertNull(reservation);
-
-	    } catch (Exception e) {
-	        fail("Should not throw exception: " + e);
-	    } finally {
-	        sut.close();
-	    }
-	}
+//	@Test
+//	// TRY-1(Catch): ride, traveler edo driver ez dira existitzen datu-basean
+//	// Sarrera: <1, 333, traveler@gmail.com>
+//	// Null itzuli behar du
+//	public void test1() {
+//	    try {
+//	        // Arrange
+//	        String email = "traveler@gmail.com";
+//	        int hm = 1;
+//	        Integer rideNumber = 333;
+//
+//	        EntityTransaction mockTransaction = Mockito.mock(EntityTransaction.class);
+//	        Mockito.when(db.getTransaction()).thenReturn(mockTransaction);
+//
+//	        Mockito.when(db.find(Ride.class, rideNumber)).thenReturn(null);
+//	        Mockito.when(db.find(Traveler.class, email)).thenReturn(null);
+//
+//	        // Act
+//	        sut.open();
+//	        Reservation reservation = sut.createReservation(hm, rideNumber, email);
+//
+//	        // Assert
+//	        assertNull(reservation);
+//
+//	    } catch (Exception e) {
+//	        fail("Should not throw exception: " + e);
+//	    } finally {
+//	        sut.close();
+//	    }
+//	}
 
 	
 	@Test

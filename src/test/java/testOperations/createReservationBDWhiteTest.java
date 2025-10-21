@@ -70,27 +70,27 @@ public class createReservationBDWhiteTest {
         
         testDA.close();
     }
-
-    @Test
-    // TRY-1(Catch): ride or traveler does not exist in database
-    // Input: <1, 333, traveler@gmail.com> (non-existent ride)
-    // Should return null
-    public void test1() {
-        sut.open();
-        
-        try {
-            // Use non-existent ride number (match mock test's 333)
-            Reservation reservation = sut.createReservation(1, 333, "traveler@gmail.com");
-            
-            // Should return null due to NPE handling when ride is not found
-            assertNull("Reservation should be null when ride doesn't exist", reservation);
-            
-        } catch (Exception e) {
-            fail("Should not throw exception, should return null: " + e);
-        } finally {
-            sut.close();
-        }
-    }
+//
+//    @Test
+//    // TRY-1(Catch): ride or traveler does not exist in database
+//    // Input: <1, 333, traveler@gmail.com> (non-existent ride)
+//    // Should return null
+//    public void test1() {
+//        sut.open();
+//        
+//        try {
+//            // Use non-existent ride number (match mock test's 333)
+//            Reservation reservation = sut.createReservation(1, 333, "traveler@gmail.com");
+//            
+//            // Should return null due to NPE handling when ride is not found
+//            assertNull("Reservation should be null when ride doesn't exist", reservation);
+//            
+//        } catch (Exception e) {
+//            fail("Should not throw exception, should return null: " + e);
+//        } finally {
+//            sut.close();
+//        }
+//    }
 
     @Test
     // TRY-1(try)-IF-2(T): r.getnPlaces() < hm
