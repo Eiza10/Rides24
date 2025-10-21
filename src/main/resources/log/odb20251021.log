@@ -1,0 +1,35 @@
+------------------------------------------------------------------------------------------------------------------------
+
+[2025-10-21 11:17:17 #1 store] 
+Database 'C:\Users\Haritz\Desktop\UNI\4.urtea\SI2\Rides24\src\main\resources\rides.temp' has been recovered (tr. 1069-1139)
+
+[2025-10-21 11:17:17 #2 store] 
+Database 'C:\Users\Haritz\Desktop\UNI\4.urtea\SI2\Rides24\src\main\resources\rides.temp' is opened by 10196@Vivobook-ASUS
+
+[2025-10-21 11:17:17 #3 type] 
+Type domain.Driver is not enhanced.
+
+[2025-10-21 11:17:17 #4 type] 
+Type domain.Complaint is not enhanced.
+
+[2025-10-21 11:17:17 #5 type] 
+Type domain.Transaction is not enhanced.
+
+[2025-10-21 11:17:17 #6 type] 
+Type domain.Car is not enhanced.
+
+[2025-10-21 11:17:17 #7 type] 
+Type domain.Reservation is not enhanced.
+
+[2025-10-21 11:17:17 #8 type] 
+Type domain.Ride is not enhanced.
+
+[2025-10-21 11:17:17 #9 type] 
+Type domain.Traveler is not enhanced.
+
+[2025-10-21 11:17:17 #10 type] 
+Type domain.Alert is not enhanced.
+
+[2025-10-21 11:17:17 #11 type] 
+Type domain.Admin is not enhanced.
+

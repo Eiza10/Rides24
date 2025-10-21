@@ -56,7 +56,6 @@ public class AdminGUI extends JFrame {
 
 		this.admin=ad;
 		
-		BLFacade facade = MainGUI.getBusinessLogic();
 		// this.setSize(271, 295);
 		this.setSize(495, 290);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle(ETIQUETAS).getString("DriverAndTravelerGUI.Welcome")+" "+admin.getName());
