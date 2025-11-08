@@ -654,16 +654,16 @@ public class DataAccess  {
 	}
 	
 	
-	private void addRating(String email, int rating, Integer reservationCode, Class<?> userClass, boolean isDriver) {
+	private void addRating(dataAccess.RatingRequest req) {
 		db.getTransaction().begin();
-		Reservation reservation = db.find(Reservation.class, reservationCode);
-		Object user = db.find(userClass, email);
+		Reservation reservation = db.find(Reservation.class, req.getReservationCode());
+		Object user = db.find(req.getUserClass(), req.getEmail());
 
-		if (isDriver) {
-			((Driver) user).addRating(rating);
+		if (req.isDriver()) {
+			((Driver) user).addRating(req.getRating());
 			reservation.setRatedT(true);
 		} else {
-			((Traveler) user).addRating(rating);
+			((Traveler) user).addRating(req.getRating());
 			reservation.setRatedD(true);
 		}
 
@@ -673,11 +673,11 @@ public class DataAccess  {
 	}
 
 	public void addRatingToDriver(String email, int rating, Integer reservationCode) {
-		addRating(email, rating, reservationCode, Driver.class, true);
+		addRating(new dataAccess.RatingRequest(email, rating, reservationCode, Driver.class, true));
 	}
 
 	public void addRatingToTraveler(String email, int rating, Integer reservationCode) {
-		addRating(email, rating, reservationCode, Traveler.class, false);
+		addRating(new dataAccess.RatingRequest(email, rating, reservationCode, Traveler.class, false));
 	}
 	
 	
