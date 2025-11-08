@@ -10,6 +10,7 @@ import domain.Traveler;
 import domain.Admin;
 import domain.Alert;
 import domain.Car;
+import domain.CarRequest;
 import domain.Complaint;
 import domain.Driver;
 import domain.Reservation;
@@ -130,7 +131,7 @@ public interface BLFacade  {
 	public void cancelReservation (Reservation res);
 	
 	@WebMethod
-	public void addCarToDriver(String driverEmail, String carPlate, int nPlaces, boolean dis) throws CarAlreadyExistsException;
+	public void addCarToDriver(CarRequest request) throws CarAlreadyExistsException;
 	
 	@WebMethod
 	public List<Transaction> getTravelerTransactions(String email);

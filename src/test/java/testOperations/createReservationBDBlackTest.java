@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
+import domain.CarRequest;
 import domain.Reservation;
 import domain.Ride;
 import exceptions.CarAlreadyExistsException;
@@ -113,16 +115,19 @@ public class createReservationBDBlackTest {
             // Create a car with limited seats (1 seat) to match other tests
             String carPlate = "CAR-002-" + System.currentTimeMillis();
             try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 1, false);
+                CarRequest request = new CarRequest(carPlate, 1, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             } catch (CarAlreadyExistsException e) {
                 carPlate = "CAR-002-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 1, false);
+                CarRequest request = new CarRequest(carPlate, 1, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             }
             
             // Create a ride with 1 seat
             Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+            ride = sut.createRide(request);
+
             // Try to reserve more seats than available (2 > 1)
             sut.createReservation(2, ride.getRideNumber(), "traveler@gmail.com");
             
@@ -140,16 +145,19 @@ public class createReservationBDBlackTest {
             // Create a car with enough seats
             String carPlate = "CAR-003-" + System.currentTimeMillis();
             try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             } catch (CarAlreadyExistsException e) {
                 carPlate = "CAR-003-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             }
             
             // Create a ride
             Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+            ride = sut.createRide(request);
+
             // Create first reservation - should succeed
             Reservation firstRes = sut.createReservation(1, ride.getRideNumber(), "traveler@gmail.com");
             assertNotNull("First reservation should be created", firstRes);
@@ -172,16 +180,19 @@ public class createReservationBDBlackTest {
             // Create a car with enough seats
             String carPlate = "CAR-004-" + System.currentTimeMillis();
             try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             } catch (CarAlreadyExistsException e) {
                 carPlate = "CAR-004-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             }
             
             // Create a ride
             Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+            ride = sut.createRide(request);
+
             // Create reservation
             reservation = sut.createReservation(1, ride.getRideNumber(), "traveler@gmail.com");
             
@@ -210,15 +221,18 @@ public class createReservationBDBlackTest {
             // Create a valid ride first
             String carPlate = "CAR-005-" + System.currentTimeMillis();
             try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             } catch (CarAlreadyExistsException e) {
                 carPlate = "CAR-005-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 5, false);
+                CarRequest request = new CarRequest(carPlate, 5, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             }
             
             Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+            ride = sut.createRide(request);
+
             // Test with null email - this should return null or throw exception
             Reservation res3 = sut.createReservation(1, ride.getRideNumber(), null);
             assertNull("Reservation should be null when email is null", res3);
@@ -240,15 +254,18 @@ public class createReservationBDBlackTest {
             // Create a car with exactly 1 seat
             String carPlate = "CAR-006-" + System.currentTimeMillis();
             try {
-                sut.addCarToDriver("driver@gmail.com", carPlate, 1, false);
+                CarRequest request = new CarRequest(carPlate, 1, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             } catch (CarAlreadyExistsException e) {
                 carPlate = "CAR-006-ALT-" + System.currentTimeMillis();
-                sut.addCarToDriver("driver@gmail.com", carPlate, 1, false);
+                CarRequest request = new CarRequest(carPlate, 1, sut.getDriverByEmail("driver@gmail.com", "pass"), false);
+                sut.addCarToDriver(request);
             }
             
             Date futureDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            ride = sut.createRide("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbao", "Donostia", futureDate, 10.0f, "driver@gmail.com", carPlate);
+            ride = sut.createRide(request);
+
             // Reserve exactly the maximum available seats (1 seat)
             Reservation reservation = sut.createReservation(1, ride.getRideNumber(), "traveler@gmail.com");
             assertNotNull("Reservation should be created when requesting exactly available seats", reservation);

@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
 import domain.Driver;
 import domain.Reservation;
 import domain.Ride;
@@ -139,7 +140,8 @@ public class returnMoneyTravelerBDWhiteTest {
 			sut.createTraveler(travelerEmail, "Test Traveler", "456");
 			
 			// Create a ride
-			Ride ride = sut.createRide("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
+			Ride ride = sut.createRide(request);
 			
 			// Create unpaid reservation - this tests the path where if-1 (res.isPayed()) is false
 			Reservation reservation = sut.createReservation(1, ride.getRideNumber(), travelerEmail);
@@ -206,7 +208,8 @@ public class returnMoneyTravelerBDWhiteTest {
 			sut.createTraveler(travelerEmail, "Test Traveler", "456");
 			
 			// Create a ride
-			Ride ride = sut.createRide("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
+			Ride ride = sut.createRide(request);
 			
 			// Create paid reservation - this ensures if-1 (res.isPayed()) is true
 			Reservation reservation = sut.createReservation(2, ride.getRideNumber(), travelerEmail);

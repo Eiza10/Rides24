@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.Test;
 
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
+import domain.CarRequest;
 import domain.Driver;
 import domain.Reservation;
 import domain.Ride;
@@ -43,13 +45,16 @@ public class returnMoneyTravelerBDBlackTest {
             sut.createTraveler(travelerEmail, "Test Traveler", "456");
             
             // Add a car to the driver first
-            sut.addCarToDriver(driverEmail, "AA123456", 4, false);
-            
+            String carPlate = "AA123456";
+            CarRequest carRequest = new CarRequest(carPlate, 4, sut.getDriverByEmail(driverEmail, "123"), false);
+            sut.addCarToDriver(carRequest);
+
             // Create a date one day after today
             Date tomorrow = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
             
             // Create a ride
-            Ride ride = sut.createRide("Bilbo", "Donostia", tomorrow, 10.0f, driverEmail, "AA123456");
+            RideCreationRequest request = new RideCreationRequest("Bilbo", "Donostia", tomorrow, 10.0f, driverEmail, carPlate);
+            Ride ride = sut.createRide(request);
             assertNotNull("Ride should be created successfully", ride);
             
             // Create reservation
@@ -247,8 +252,9 @@ public class returnMoneyTravelerBDBlackTest {
             sut.open();
             
             // Create a ride
-            Ride ride = sut.createRide("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
-            
+            RideCreationRequest request = new RideCreationRequest("Bilbo", "Donostia", new Date(), 10.0f, driverEmail, "AA123456");
+            Ride ride = sut.createRide(request);
+
             // Create a reservation that references a non-existent traveler
             // We need to create a traveler first to create the reservation, then delete it
             sut.createTraveler(nonExistentTravelerEmail, "Temp Traveler", "456");

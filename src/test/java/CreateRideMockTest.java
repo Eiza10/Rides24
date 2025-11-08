@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
 import domain.Car;
 import domain.Driver;
 import domain.Ride;
@@ -101,7 +102,8 @@ public class CreateRideMockTest {
 			//invoke System Under Test (sut)  
 			sut.open();
 			// String from, String to, Date date, float price, String driverEmail, String carPlate
-		    sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+		    sut.createRide(request);
 			sut.close();
 			
 			fail();
@@ -145,7 +147,8 @@ public class CreateRideMockTest {
 					
 			//invoke System Under Test (sut)  
 			sut.open();
-			Ride ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			Ride ride=sut.createRide(request);
 			sut.close();
 			//verify the results
 			assertNotNull(ride);
@@ -199,7 +202,8 @@ public class CreateRideMockTest {
 				
 				//invoke System Under Test (sut)  
 				sut.open();
-				Ride ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+				RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+				Ride ride=sut.createRide(request);
 				System.out.println("ride "+ride);
 
 				//verify the results
@@ -253,7 +257,8 @@ public class CreateRideMockTest {
 			
 	        //invoke System Under Test (sut)  
 			sut.open();
-			 ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			ride=sut.createRide(request);
 			sut.close();			
 			//verify the results
 			assertNull(ride);

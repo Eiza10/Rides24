@@ -19,6 +19,7 @@ import configuration.UtilDate;
 import domain.Admin;
 import domain.Alert;
 import domain.Car;
+import domain.CarRequest;
 import domain.Complaint;
 import domain.Driver;
 import domain.Reservation;
@@ -180,33 +181,33 @@ public class DataAccess  {
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
  	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
-	public Ride createRide(String from, String to, Date date, float price, String driverEmail, String carPlate) throws  RideAlreadyExistException, RideMustBeLaterThanTodayException {
-		System.out.println(">> DataAccess: createRide=> from= "+from+" to= "+to+" driver="+driverEmail+" date "+date);
-		try {
-			if(new Date().compareTo(date)>0) {
-				throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
-			}
-			db.getTransaction().begin();
-			
-			Driver driver = db.find(Driver.class, driverEmail);
-			if (driver.doesRideExists(from, to, date)) {
-				db.getTransaction().commit();
-				throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
-			}
-			
-			Car car = db.find(Car.class, carPlate);
-			Ride ride = driver.addRide(from, to, date, price, car);
-			//next instruction can be obviated
-			db.persist(driver); 
-			db.getTransaction().commit();
+	public Ride createRide(RideCreationRequest request) throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
+    System.out.println(">> DataAccess: createRide=> from= "+request.getFrom()+" to= "+request.getTo()+" driver="+request.getDriverEmail()+" date "+request.getDate());
+    try {
+        if(new Date().compareTo(request.getDate())>0) {
+            throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
+        }
+        db.getTransaction().begin();
+        
+        Driver driver = db.find(Driver.class, request.getDriverEmail());
+        if (driver.doesRideExists(request.getFrom(), request.getTo(), request.getDate())) {
+            db.getTransaction().commit();
+            throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+        }
+        
+        Car car = db.find(Car.class, request.getCarPlate());
+        Ride ride = driver.addRide(request.getFrom(), request.getTo(), request.getDate(), request.getPrice(), car);
+        //next instruction can be obviated
+        db.persist(driver); 
+        db.getTransaction().commit();
 
-			return ride;
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			db.getTransaction().commit();
-			return null;
-		}
-	}
+        return ride;
+    } catch (NullPointerException e) {
+        // TODO Auto-generated catch block
+        db.getTransaction().commit();
+        return null;
+    }
+}
 	
 	/**
 	 * This method retrieves the rides from two locations on a given date 
@@ -325,37 +326,44 @@ public class DataAccess  {
 	}
 	
 	public Reservation createReservation(int nTravelers, Integer rideNumber, String travelerEmail) throws ReservationAlreadyExistException, NotEnoughAvailableSeatsException{
-		System.out.println(">> DataAccess: createReservation=> how many seats= "+nTravelers+" ride number= "+rideNumber+" traveler="+travelerEmail);
-		try {
-			db.getTransaction().begin();
-			Ride r = db.find(Ride.class, rideNumber);
-			if(r.getnPlaces()<nTravelers) {
-				throw new NotEnoughAvailableSeatsException(ResourceBundle.getBundle("Etiquetas").getString("MakeReservationGUI.jButtonError2"));
-			}
-			
-			Traveler t = db.find(Traveler.class, travelerEmail);
-		    Driver d = db.find(Driver.class, r.getDriver().getEmail());
-			
-			if (r.doesReservationExist(nTravelers, t)) {
-				db.getTransaction().commit();
-				throw new ReservationAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ReservationAlreadyExist"));
-			}
-			Reservation res = t.makeReservation(r, nTravelers);
-			System.out.println("res: "+ res);
-			d.addReservation(res);
-			r.addReservation(res);
-			db.persist(d); 
-			db.persist(t);
-			db.persist(r);
-			db.getTransaction().commit();
+    System.out.println(">> DataAccess: createReservation=> how many seats= "+nTravelers+" ride number= "+rideNumber+" traveler="+travelerEmail);
+    try {
+        db.getTransaction().begin();
+        Ride r = db.find(Ride.class, rideNumber);
+        checkAvailableSeats(r, nTravelers);
+        Traveler t = db.find(Traveler.class, travelerEmail);
+        Driver d = db.find(Driver.class, r.getDriver().getEmail());
+        ensureReservationDoesNotExist(r, nTravelers, t);
+        Reservation res = persistNewReservation(r, t, d, nTravelers);
+        db.getTransaction().commit();
+        return res;
+    } catch (NullPointerException e) {
+        db.getTransaction().commit();
+        return null;
+    }
+}
 
-			return res;
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			db.getTransaction().commit();
-			return null;
-		}
-	}
+private void checkAvailableSeats(Ride r, int nTravelers) throws NotEnoughAvailableSeatsException {
+    if (r.getnPlaces() < nTravelers) {
+        throw new NotEnoughAvailableSeatsException(ResourceBundle.getBundle("Etiquetas").getString("MakeReservationGUI.jButtonError2"));
+    }
+}
+
+private void ensureReservationDoesNotExist(Ride r, int nTravelers, Traveler t) throws ReservationAlreadyExistException {
+    if (r.doesReservationExist(nTravelers, t)) {
+        throw new ReservationAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ReservationAlreadyExist"));
+    }
+}
+
+private Reservation persistNewReservation(Ride r, Traveler t, Driver d, int nTravelers) {
+    Reservation res = t.makeReservation(r, nTravelers);
+    d.addReservation(res);
+    r.addReservation(res);
+    db.persist(d);
+    db.persist(t);
+    db.persist(r);
+    return res;
+}
 	
     /**
      * Generic method to retrieve and authenticate a user by email
@@ -528,15 +536,15 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
-	public void addCarToDriver(String driverEmail, String carPlate, int nPlaces, boolean dis) throws CarAlreadyExistsException{
+	public void addCarToDriver(CarRequest request) throws CarAlreadyExistsException{
 		db.getTransaction().begin();
-		Driver d = db.find(Driver.class, driverEmail);
-		Car c = db.find(Car.class, carPlate);
+		Driver d = db.find(Driver.class, request.getDriver().getEmail());
+		Car c = db.find(Car.class, request.getCarPlate());
 		if(!(c == null)) {
 			db.getTransaction().commit();
 			throw new CarAlreadyExistsException();
 		}
-		Car car = new Car (carPlate, nPlaces, d, dis);
+		Car car = new Car(request.getCarPlate(), request.getNPlaces(), d, request.hasDiscount());
 		d.addCar(car);
 		db.persist(car);
 		db.persist(d);

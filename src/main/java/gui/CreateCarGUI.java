@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Car;
+import domain.CarRequest;
 import domain.Driver;
 import domain.Ride;
 import exceptions.CarAlreadyExistsException;
@@ -114,7 +115,8 @@ public class CreateCarGUI extends JFrame {
 		else
 			try {
 				BLFacade facade = MainGUI.getBusinessLogic();
-				facade.addCarToDriver(driver.getEmail(), fieldPlate.getText(), Integer.parseInt(fieldPlaces.getText()), dis);
+				CarRequest request = new CarRequest(fieldPlate.getText(), Integer.parseInt(fieldPlaces.getText()), driver, dis);
+				facade.addCarToDriver(request);
 				jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateCarGUI.CreatedCar"));
 				
 			} catch (CarAlreadyExistsException e1) {

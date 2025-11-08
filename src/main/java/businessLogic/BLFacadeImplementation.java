@@ -8,6 +8,7 @@ import javax.jws.WebService;
 
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
 import domain.*;
 import exceptions.*;
 
@@ -64,7 +65,8 @@ public class BLFacadeImplementation  implements BLFacade {
    public Ride createRide( String from, String to, Date date,float price, String driverEmail, String carPlaces ) throws RideMustBeLaterThanTodayException, RideAlreadyExistException{
 	   
 		dbManager.open();
-		Ride ride=dbManager.createRide(from, to, date, price, driverEmail, carPlaces);		
+		RideCreationRequest request = new RideCreationRequest(from, to, date, price, driverEmail, carPlaces);
+		Ride ride=dbManager.createRide(request);		
 		dbManager.close();
 		return ride;
    };
@@ -202,9 +204,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
     @WebMethod
-	public void addCarToDriver(String driverEmail, String carPlate, int nPlaces, boolean dis) throws CarAlreadyExistsException{
+	public void addCarToDriver(CarRequest request) throws CarAlreadyExistsException{
 		dbManager.open();
-		dbManager.addCarToDriver(driverEmail, carPlate, nPlaces, dis);
+		dbManager.addCarToDriver(request);
 		dbManager.close();
 	}
 	

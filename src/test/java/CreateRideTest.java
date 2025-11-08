@@ -11,6 +11,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import dataAccess.DataAccess;
+import dataAccess.RideCreationRequest;
 import domain.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -59,7 +60,8 @@ public class CreateRideTest {
 			
 			//invoke System Under Test (sut)  
 			sut.open();
-		    sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AAA11111");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AAA11111");
+		    sut.createRide(request);
 			sut.close();
 			
 			fail();
@@ -111,7 +113,8 @@ public class CreateRideTest {
 			
 			//invoke System Under Test (sut)  
 			sut.open();
-			Ride ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AAA123456");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AAA123456");
+			Ride ride=sut.createRide(request);
 			sut.close();
 			//verify the results
 			assertNotNull(ride);
@@ -175,8 +178,9 @@ public class CreateRideTest {
 				
 				//invoke System Under Test (sut)  
 				sut.open();
-				
-				Ride ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail,"AA123456");
+
+				RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+				Ride ride=sut.createRide(request);
 				System.out.println("ride "+ride);
 
 				//verify the results
@@ -221,7 +225,8 @@ public class CreateRideTest {
 		try {
 			//invoke System Under Test (sut)  
 			sut.open();
-			 ride=sut.createRide(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			RideCreationRequest request = new RideCreationRequest(rideFrom, rideTo, rideDate, 0, driverEmail, "AA123456");
+			ride=sut.createRide(request);
 			sut.close();			
 			
 			//verify the results
