@@ -34,38 +34,12 @@ public class ApplicationLauncher {
 
 		try {
 			
-			BLFacade appFacadeInterface;
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 			
-			if (config.isBusinessLogicLocal()) {
-			
-				DataAccess dataAccess= new DataAccess();
-				appFacadeInterface=new BLFacadeImplementation(dataAccess);
+			BLFactory factory = new BLFactory();
+			BLProduct BLproduct = factory.createBLProduct();
+			MainGUI.setBussinessLogic(BLproduct.getBLFacade());
 
-				
-			}
-			
-			else { //If remote
-				
-				 String serviceName= "http://"+config.getBusinessLogicNode() +":"+ config.getBusinessLogicPort()+"/ws/"+config.getBusinessLogicName()+"?wsdl";
-				 
-				URL url = new URL(serviceName);
-
-		 
-		        //1st argument refers to wsdl document above
-				//2nd argument is service name, refer to wsdl document above
-		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-		 
-		        Service service = Service.create(url, qname);
-
-		         appFacadeInterface = service.getPort(BLFacade.class);
-			} 
-			
-			MainGUI.setBussinessLogic(appFacadeInterface);
-
-		
-
-			
 		}catch (Exception e) {
 			mainWindow.jLabelWelcome.setText("Error: "+e.toString());
 			mainWindow.jLabelWelcome.setForeground(Color.RED);	
